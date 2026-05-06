@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+/*
+  Brand tokens — Virtuoso Psychology
+  Three palette options exposed simultaneously so the /palettes preview page
+  can render all three side-by-side. Once Cara picks one, the unused tokens
+  collapse and the chosen palette becomes the global default.
+*/
+@theme {
+  /* Option A — Refined Navy & Gold */
+  --color-a-primary: #0b1b33;
+  --color-a-primary-mid: #152a4d;
+  --color-a-accent: #d4a24c;
+  --color-a-accent-deep: #a07628;
+  --color-a-surface: #faf7f0;
+  --color-a-ink: #1a1a1a;
+
+  /* Option B — Stadium Bold */
+  --color-b-primary: #0a0a0a;
+  --color-b-surface: #ffffff;
+  --color-b-accent: #c6f432;
+  --color-b-accent-alt: #ff5a1f;
+  --color-b-neutral-1: #f4f4f4;
+  --color-b-neutral-4: #5a5a5a;
+
+  /* Option C — Editorial Calm */
+  --color-c-primary: #1a1a2e;
+  --color-c-accent: #c2522d;
+  --color-c-surface-warm: #f4ecd8;
+  --color-c-surface-cool: #ffffff;
+  --color-c-neutral-mid: #6b6b73;
+
+  /* Type — Google-hosted shortlist for the preview page only.
+     Final fonts will be self-hosted via @fontsource once palette is locked. */
+  --font-display-serif: "Fraunces", "Iowan Old Style", Georgia, serif;
+  --font-display-sans: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+}
+
+/* Display fonts loaded only on the palette preview page so production stays light. */
+@layer base {
+  html {
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    margin: 0;
+  }
+
+  /* Respect reduced-motion globally */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}

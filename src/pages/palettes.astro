@@ -1,0 +1,273 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+type Palette = {
+  id: "A" | "B" | "C";
+  name: string;
+  tagline: string;
+  display: "serif" | "sans";
+  surface: string;
+  surfaceAlt: string;
+  ink: string;
+  inkMuted: string;
+  accent: string;
+  accentDeep: string;
+  swatches: { label: string; hex: string; textOn?: string }[];
+};
+
+const palettes: Palette[] = [
+  {
+    id: "A",
+    name: "Refined Navy & Gold",
+    tagline: "Trustworthy · Premium · Classic-sport",
+    display: "serif",
+    surface: "#0B1B33",
+    surfaceAlt: "#152A4D",
+    ink: "#FAF7F0",
+    inkMuted: "#C8C2B0",
+    accent: "#D4A24C",
+    accentDeep: "#A07628",
+    swatches: [
+      { label: "Primary deep", hex: "#0B1B33" },
+      { label: "Primary mid", hex: "#152A4D" },
+      { label: "Accent gold", hex: "#D4A24C", textOn: "#0B1B33" },
+      { label: "Accent deep", hex: "#A07628" },
+      { label: "Surface", hex: "#FAF7F0", textOn: "#0B1B33" },
+      { label: "Ink", hex: "#1A1A1A" },
+    ],
+  },
+  {
+    id: "B",
+    name: "Stadium Bold",
+    tagline: "Athletic · Urgent · Fearless",
+    display: "sans",
+    surface: "#0A0A0A",
+    surfaceAlt: "#1A1A1A",
+    ink: "#FFFFFF",
+    inkMuted: "#9A9A9A",
+    accent: "#C6F432",
+    accentDeep: "#FF5A1F",
+    swatches: [
+      { label: "Primary", hex: "#0A0A0A" },
+      { label: "Surface", hex: "#FFFFFF", textOn: "#0A0A0A" },
+      { label: "Lime accent", hex: "#C6F432", textOn: "#0A0A0A" },
+      { label: "Orange alt", hex: "#FF5A1F" },
+      { label: "Neutral 1", hex: "#F4F4F4", textOn: "#0A0A0A" },
+      { label: "Neutral 4", hex: "#5A5A5A" },
+    ],
+  },
+  {
+    id: "C",
+    name: "Editorial Calm",
+    tagline: "Grown-up · Intelligent · Human",
+    display: "serif",
+    surface: "#F4ECD8",
+    surfaceAlt: "#FFFFFF",
+    ink: "#1A1A2E",
+    inkMuted: "#6B6B73",
+    accent: "#C2522D",
+    accentDeep: "#8E3A1E",
+    swatches: [
+      { label: "Primary ink", hex: "#1A1A2E" },
+      { label: "Accent terracotta", hex: "#C2522D" },
+      { label: "Surface warm", hex: "#F4ECD8", textOn: "#1A1A2E" },
+      { label: "Surface cool", hex: "#FFFFFF", textOn: "#1A1A2E" },
+      { label: "Neutral mid", hex: "#6B6B73" },
+      { label: "Accent deep", hex: "#8E3A1E" },
+    ],
+  },
+];
+---
+
+<BaseLayout title="Palette options · Virtuoso Psychology">
+  <header class="px-6 md:px-12 py-10 bg-white border-b border-black/10">
+    <p class="uppercase tracking-[0.2em] text-xs text-black/60 mb-3" style="font-family: var(--font-display-sans);">
+      Virtuoso Psychology · Brand exploration v0.1
+    </p>
+    <h1 class="text-3xl md:text-5xl text-black max-w-3xl leading-[1.1]" style="font-family: var(--font-display-serif);">
+      Three directions. Same site. Pick the one that feels like Virtuoso.
+    </h1>
+    <p class="mt-6 max-w-2xl text-black/70 leading-relaxed">
+      Each section below shows the <em>same</em> hero, services, and pull-quote rendered in a different colour and
+      typography system. Read it as if you'd just landed on the site cold &mdash; the one that makes you feel
+      something is the right one.
+    </p>
+  </header>
+
+  {
+    palettes.map((p) => {
+      const displayFont =
+        p.display === "serif" ? "var(--font-display-serif)" : "var(--font-display-sans)";
+      return (
+        <section
+          class="relative overflow-hidden"
+          style={`background: ${p.surface}; color: ${p.ink};`}
+        >
+          {/* meta row */}
+          <div
+            class="px-6 md:px-12 pt-12 pb-6 flex flex-col md:flex-row md:items-end md:justify-between gap-3 border-b"
+            style={`border-color: ${p.ink}1A;`}
+          >
+            <div>
+              <p
+                class="uppercase tracking-[0.25em] text-xs mb-2"
+                style={`color: ${p.accent}; font-family: var(--font-display-sans);`}
+              >
+                Option {p.id}
+              </p>
+              <h2 class="text-2xl md:text-3xl" style={`font-family: ${displayFont};`}>
+                {p.name}
+              </h2>
+              <p class="mt-2 text-sm" style={`color: ${p.inkMuted};`}>
+                {p.tagline}
+              </p>
+            </div>
+            <p class="text-xs uppercase tracking-[0.2em]" style={`color: ${p.inkMuted};`}>
+              Display: {p.display === "serif" ? "Fraunces" : "Archivo"} · Body: IBM Plex Sans
+            </p>
+          </div>
+
+          {/* hero mock */}
+          <div class="px-6 md:px-12 pt-16 md:pt-24 pb-20 md:pb-28 grid md:grid-cols-12 gap-8 items-end">
+            <div class="md:col-span-9">
+              <p
+                class="uppercase tracking-[0.25em] text-xs mb-6"
+                style={`color: ${p.accent}; font-family: var(--font-display-sans);`}
+              >
+                Sports psychology &middot; for teams &amp; the athletes who lead them
+              </p>
+              <h3
+                class="leading-[0.95] tracking-[-0.02em]"
+                style={`
+                  font-family: ${displayFont};
+                  font-size: clamp(48px, 9vw, 140px);
+                  font-weight: ${p.display === "serif" ? 600 : 900};
+                `}
+              >
+                Empower the team.<br />
+                <span style={`color: ${p.accent};`}>Elevate</span> the game.
+              </h3>
+              <p
+                class="mt-8 max-w-xl text-base md:text-lg leading-relaxed"
+                style={`color: ${p.inkMuted};`}
+              >
+                We work with squads, individual athletes, and the coaches who lead them.
+                Plain-spoken, evidence-based, built around your moment.
+              </p>
+              <div class="mt-10 flex flex-wrap gap-4">
+                <a
+                  href="#"
+                  class="inline-block px-7 py-4 uppercase tracking-[0.15em] text-sm transition-colors duration-200 cursor-pointer"
+                  style={`background: ${p.accent}; color: ${p.surface}; font-family: var(--font-display-sans); font-weight: 700;`}
+                  onmouseover={`this.style.background='${p.accentDeep}'`}
+                  onmouseout={`this.style.background='${p.accent}'`}
+                >
+                  Book a discovery call →
+                </a>
+                <a
+                  href="#"
+                  class="inline-block px-7 py-4 uppercase tracking-[0.15em] text-sm border transition-colors duration-200 cursor-pointer"
+                  style={`border-color: ${p.ink}; color: ${p.ink}; font-family: var(--font-display-sans); font-weight: 600;`}
+                >
+                  How we work
+                </a>
+              </div>
+            </div>
+
+            {/* video slot placeholder */}
+            <div class="md:col-span-3 hidden md:block">
+              <div
+                class="aspect-[3/4] w-full rounded-sm flex items-center justify-center text-xs uppercase tracking-[0.2em]"
+                style={`background: ${p.surfaceAlt}; color: ${p.inkMuted}; border: 1px solid ${p.ink}1A;`}
+              >
+                Future film
+              </div>
+            </div>
+          </div>
+
+          {/* services mini-grid */}
+          <div
+            class="px-6 md:px-12 py-16 grid md:grid-cols-3 gap-6 border-t"
+            style={`background: ${p.surfaceAlt}; border-color: ${p.ink}1A;`}
+          >
+            {[
+              { n: "01", t: "Teams", b: "Workshops, season-long retainers, culture work for squads and staff." },
+              { n: "02", t: "Individuals", b: "1:1 work for athletes navigating pressure, transitions, identity." },
+              { n: "03", t: "Speaking", b: "Keynotes and bespoke sessions for clubs, federations, and conferences." },
+            ].map((s) => (
+              <article class="p-6" style={`border-top: 2px solid ${p.accent};`}>
+                <p
+                  class="uppercase tracking-[0.2em] text-xs mb-4"
+                  style={`color: ${p.accent}; font-family: var(--font-display-sans); font-weight: 700;`}
+                >
+                  {s.n}
+                </p>
+                <h4 class="text-2xl mb-3" style={`font-family: ${displayFont}; font-weight: ${p.display === "serif" ? 600 : 700};`}>
+                  {s.t}
+                </h4>
+                <p class="text-sm leading-relaxed" style={`color: ${p.inkMuted};`}>
+                  {s.b}
+                </p>
+              </article>
+            ))}
+          </div>
+
+          {/* pull-quote */}
+          <div class="px-6 md:px-12 py-20 md:py-28 text-center">
+            <p
+              class="max-w-4xl mx-auto leading-[1.15] tracking-[-0.01em]"
+              style={`
+                font-family: ${displayFont};
+                font-size: clamp(28px, 4vw, 56px);
+                font-weight: ${p.display === "serif" ? 400 : 700};
+                font-style: ${p.display === "serif" ? "italic" : "normal"};
+              `}
+            >
+              "Performance is collective. Even the work we do one-to-one happens
+              in the context of <span style={`color: ${p.accent}; font-style: normal;`}>a team, a coach, a relationship</span>."
+            </p>
+            <p
+              class="mt-8 uppercase tracking-[0.25em] text-xs"
+              style={`color: ${p.inkMuted}; font-family: var(--font-display-sans);`}
+            >
+              Cara &middot; Founder, Virtuoso Psychology
+            </p>
+          </div>
+
+          {/* swatch row */}
+          <div class="px-6 md:px-12 pb-16">
+            <p
+              class="uppercase tracking-[0.25em] text-xs mb-4"
+              style={`color: ${p.inkMuted}; font-family: var(--font-display-sans);`}
+            >
+              The system
+            </p>
+            <div class="grid grid-cols-2 md:grid-cols-6 gap-3">
+              {p.swatches.map((sw) => (
+                <div
+                  class="aspect-[4/3] p-3 flex flex-col justify-between text-[11px] leading-tight"
+                  style={`background: ${sw.hex}; color: ${sw.textOn ?? p.ink}; border: 1px solid ${p.ink}1A;`}
+                >
+                  <span class="uppercase tracking-[0.15em] opacity-80" style="font-family: var(--font-display-sans);">
+                    {sw.label}
+                  </span>
+                  <span class="font-mono">{sw.hex}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+    })
+  }
+
+  <footer class="px-6 md:px-12 py-12 bg-white text-black/70 text-sm">
+    <p class="max-w-2xl leading-relaxed">
+      Once a direction is chosen, the unused palettes drop out, fonts move from Google to self-hosted via
+      <code class="bg-black/5 px-1.5 py-0.5 rounded">@fontsource</code>, and Phase 1 (Home page build) begins.
+    </p>
+    <p class="mt-4">
+      <a href="/" class="underline underline-offset-4 hover:text-black transition-colors duration-200">← Back</a>
+    </p>
+  </footer>
+</BaseLayout>
