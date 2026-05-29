@@ -1,0 +1,74 @@
+---
+import { logoExperiment, site } from "../data/site";
+/*
+  Brand lockup: fixed text wordmark + a swappable image mark.
+  The active mark is driven by `data-logo` on <html> (set by LogoSwitcher /
+  the inline boot script). Every lockup on the page renders all marks and CSS
+  reveals only the active one, so swaps are instant and global — no JS per
+  instance, no flicker.
+
+  theme="dark"  → use white variants (sits on navy)
+  theme="light" → use normal variants (sits on cream/paper)
+*/
+interface Props {
+  theme?: "dark" | "light";
+  /** Height of the lockup in px (wordmark + mark scale to this). */
+  height?: number;
+  class?: string;
+}
+const { theme = "light", height = 32, class: className = "" } = Astro.props;
+const onDark = theme === "dark";
+
+const text = onDark ? logoExperiment.text.white : logoExperiment.text.normal;
+---
+
+<a
+  href="/"
+  class:list={["brand-lockup inline-flex items-center gap-3", className]}
+  aria-label={`${site.name} — home`}
+>
+  {/* Swappable image mark — all rendered; CSS shows the active one. */}
+  <span class="brand-mark inline-flex items-center" style={`height:${height}px`} aria-hidden="true">
+    {logoExperiment.marks.map((m) => (
+      <img
+        src={onDark ? m.white : m.normal}
+        alt=""
+        data-mark={m.id}
+        height={height}
+        class="brand-mark__img"
+        style={`height:${height}px; width:auto;`}
+        loading="eager"
+        decoding="async"
+      />
+    ))}
+  </span>
+
+  {/* Fixed wordmark */}
+  <img
+    src={text}
+    alt={site.name}
+    height={Math.round(height * 0.62)}
+    style={`height:${Math.round(height * 0.62)}px; width:auto;`}
+    loading="eager"
+    decoding="async"
+  />
+</a>
+
+<style>
+  /* Hide every mark by default; reveal only the one matching html[data-logo]. */
+  .brand-mark__img {
+    display: none;
+  }
+  /* "none" → wordmark only: no mark shown (no rule reveals any). */
+  :global(html[data-logo="logo3"]) .brand-mark__img[data-mark="logo3"],
+  :global(html[data-logo="logo1"]) .brand-mark__img[data-mark="logo1"],
+  :global(html[data-logo="logo4"]) .brand-mark__img[data-mark="logo4"],
+  :global(html[data-logo="logo5"]) .brand-mark__img[data-mark="logo5"],
+  :global(html[data-logo="logo6"]) .brand-mark__img[data-mark="logo6"] {
+    display: inline-block;
+  }
+  /* Collapse the mark's gap when no mark is shown (wordmark-only). */
+  :global(html[data-logo="none"]) .brand-mark {
+    display: none;
+  }
+</style>

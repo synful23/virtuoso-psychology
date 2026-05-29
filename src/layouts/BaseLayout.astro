@@ -1,12 +1,67 @@
 ---
 import "../styles/global.css";
+import { site as siteData, logoExperiment } from "../data/site";
+import LogoSwitcher from "../components/LogoSwitcher.astro";
+
+const defaultLogoMark = logoExperiment.defaultMark;
+
+// Self-hosted fonts (no Google Fonts CDN — avoids sending visitor IPs to a
+// third party, which is a UK-GDPR liability). Served from our own domain.
+import "@fontsource-variable/fraunces"; // wght 100–900, normal
+import "@fontsource-variable/fraunces/wght-italic.css"; // italic axis (pull-quotes)
+import "@fontsource/archivo/500.css";
+import "@fontsource/archivo/700.css";
+import "@fontsource/archivo/900.css";
+import "@fontsource/ibm-plex-sans/400.css";
+import "@fontsource/ibm-plex-sans/500.css";
+import "@fontsource/ibm-plex-sans/600.css";
 
 interface Props {
   title: string;
   description?: string;
+  ogImage?: string;
+  noindex?: boolean;
+  canonicalPath?: string;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
-const { title, description = "Sports psychology that empowers teams to perform — together." } = Astro.props;
+const {
+  title,
+  description = "Sports psychology that empowers teams, athletes and the people who lead them to perform — together.",
+  ogImage = "/og-default.png",
+  noindex = false,
+  canonicalPath,
+  jsonLd,
+} = Astro.props;
+
+const site = Astro.site ?? new URL("https://www.virtuosopsychology.com");
+const canonicalURL = new URL(canonicalPath ?? Astro.url.pathname, site);
+const ogImageURL = new URL(ogImage, site);
+
+// Default structured data: the practice (ProfessionalService) + Cara (Person).
+// Placeholder values are flagged; swap when Cara confirms credentials.
+const defaultJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  name: "Virtuoso Psychology",
+  description,
+  url: site.href,
+  areaServed: "GB",
+  image: ogImageURL.href,
+  sameAs: [siteData.social.instagram],
+  founder: {
+    "@type": "Person",
+    name: siteData.founderName,
+    jobTitle: siteData.founderRole,
+  },
+  knowsAbout: [
+    "Sport psychology",
+    "Team performance",
+    "Performance under pressure",
+  ],
+};
+
+const structuredData = jsonLd ?? defaultJsonLd;
 ---
 
 <!doctype html>
@@ -14,18 +69,59 @@ const { title, description = "Sports psychology that empowers teams to perform �
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {/*
+      Logo experiment: set the active mark on <html> before paint (reads the
+      saved choice, else the default) so the correct lockup shows with no flash.
+    */}
+    <script is:inline define:vars={{ defaultMark: defaultLogoMark }}>
+      try {
+        document.documentElement.dataset.logo =
+          localStorage.getItem("vp-logo") || defaultMark;
+      } catch (e) {
+        document.documentElement.dataset.logo = defaultMark;
+      }
+    </script>
+    <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
+    <link rel="canonical" href={canonicalURL.href} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>{title}</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Archivo:wght@500;700;900&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
-      rel="stylesheet"
-    />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    {/* Open Graph */}
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL.href} />
+    <meta property="og:image" content={ogImageURL.href} />
+    <meta property="og:locale" content="en_GB" />
+    <meta property="og:site_name" content="Virtuoso Psychology" />
+
+    {/* Twitter / X */}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL.href} />
+
+    {/* Structured data */}
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+
+    {/*
+      Cookieless analytics slot (no cookie banner needed). Uncomment and set
+      the domain once Cara confirms a Plausible / Cloudflare Web Analytics account.
+      <script defer data-domain="virtuosopsychology.com" src="https://plausible.io/js/script.js"></script>
+    */}
   </head>
   <body>
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:bg-navy-deep focus:px-5 focus:py-3 focus:text-cream focus:no-underline"
+      style="font-family: var(--font-display-sans);"
+    >
+      Skip to content
+    </a>
     <slot />
+    {/* Logo experiment tool — remove this line to retire the experiment. */}
+    <LogoSwitcher />
   </body>
 </html>

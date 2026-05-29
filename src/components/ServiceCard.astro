@@ -1,0 +1,50 @@
+---
+/*
+  Service card for navy surfaces. CSS-only hover (navy-mid → navy-soft + lift),
+  gold top-border, numeric anchor — derived from a.astro services grid.
+*/
+interface Props {
+  number: string;
+  title: string;
+  body: string;
+  href: string;
+  tag?: string;
+}
+const { number, title, body, href, tag } = Astro.props;
+---
+
+<a
+  href={href}
+  class="group block p-7 border-t-2 border-gold bg-navy-mid transition-[background-color,transform] duration-200 hover:bg-navy-soft hover:-translate-y-0.5"
+>
+  <article>
+    <div class="flex items-start justify-between mb-6">
+      <p
+        class="uppercase tracking-[0.2em] text-xs text-gold font-bold"
+        style="font-family: var(--font-display-sans);"
+      >
+        {number}
+      </p>
+      {tag && (
+        <p
+          class="uppercase tracking-[0.18em] text-[10px] px-2 py-1 bg-gold text-navy-deep font-bold"
+          style="font-family: var(--font-display-sans);"
+        >
+          {tag}
+        </p>
+      )}
+    </div>
+    <h3 class="text-3xl mb-4 text-cream" style="font-family: var(--font-display-serif); font-weight: 600;">
+      {title}
+    </h3>
+    <p class="text-sm leading-relaxed mb-6 text-ink-on-dark">
+      {body}
+    </p>
+    <p
+      class="uppercase tracking-[0.2em] text-xs text-gold font-semibold transition-transform duration-200 group-hover:translate-x-1"
+      style="font-family: var(--font-display-sans);"
+    >
+      Explore →
+    </p>
+  </article>
+</a>

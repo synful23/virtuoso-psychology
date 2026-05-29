@@ -1,0 +1,42 @@
+---
+/*
+  Layout wrapper providing the consistent editorial gutter + vertical rhythm
+  used across the site (derived from a.astro's repeated `px-6 md:px-12 py-…`).
+*/
+interface Props {
+  /** Background utility class, e.g. "bg-navy-deep". */
+  bg?: string;
+  /** Text colour utility class, e.g. "text-cream". */
+  text?: string;
+  /** Vertical padding scale. */
+  pad?: "sm" | "md" | "lg";
+  /** Semantic element. */
+  as?: "section" | "div" | "article" | "header" | "footer";
+  id?: string;
+  class?: string;
+  ariaLabel?: string;
+}
+
+const {
+  bg = "",
+  text = "",
+  pad = "lg",
+  as = "section",
+  id,
+  class: className = "",
+  ariaLabel,
+} = Astro.props;
+
+const Tag = as;
+const padding = {
+  sm: "py-10 md:py-14",
+  md: "py-14 md:py-20",
+  lg: "py-20 md:py-28",
+}[pad];
+---
+
+<Tag id={id} aria-label={ariaLabel} class:list={[bg, text, className]}>
+  <div class:list={["px-6 md:px-12", padding]}>
+    <slot />
+  </div>
+</Tag>

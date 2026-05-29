@@ -1,0 +1,31 @@
+---
+import { philosophy } from "../data/site";
+/*
+  Full-bleed philosophy pull-quote on cream-warm. Italic Fraunces with the
+  central phrase set upright in gold. Uses the verbatim empowerment statement
+  from site.ts.
+*/
+---
+
+<section class="bg-cream-warm text-navy-deep">
+  <div class="px-6 md:px-12 py-24 md:py-32 text-center">
+    <figure class="max-w-4xl mx-auto">
+      <blockquote
+        class="leading-[1.2] tracking-[-0.01em]"
+        style="font-family: var(--font-display-serif); font-style: italic; font-weight: 400; font-size: clamp(26px, 4vw, 52px);"
+      >
+        {philosophy.lead}{" "}
+        <span class="text-gold-deep not-italic" style="font-weight: 600;">
+          {philosophy.emphasis}
+        </span>{" "}
+        {philosophy.trail}
+      </blockquote>
+      <figcaption
+        class="mt-10 uppercase tracking-[0.25em] text-xs text-ink-muted"
+        style="font-family: var(--font-display-sans);"
+      >
+        {philosophy.attribution}
+      </figcaption>
+    </figure>
+  </div>
+</section>

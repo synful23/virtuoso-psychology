@@ -1,0 +1,141 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import CTABand from "../components/CTABand.astro";
+import { about, credentials, site } from "../data/site";
+
+// Person-focused structured data for Cara on this page.
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: site.founderName,
+  jobTitle: site.founderRole,
+  worksFor: [
+    { "@type": "Organization", name: site.name, url: site.url },
+    { "@type": "SportsOrganization", name: "The Football Association" },
+  ],
+  alumniOf: [
+    { "@type": "SportsOrganization", name: "Brighton & Hove Albion FC" },
+    { "@type": "CollegeOrUniversity", name: "Cardiff Metropolitan University" },
+  ],
+  hasCredential: [
+    {
+      "@type": "EducationalOccupationalCredential",
+      credentialCategory: "degree",
+      name: "PhD, Psychology",
+    },
+    {
+      "@type": "EducationalOccupationalCredential",
+      credentialCategory: "professional accreditation",
+      name: "HCPC Accredited Psychologist",
+    },
+  ],
+  url: `${site.url}/about`,
+  image: `${site.url}/images/cara-portrait.jpg`,
+  sameAs: [site.social.instagram, site.social.linkedin],
+};
+---
+
+<BaseLayout
+  title="About Cara · Virtuoso Psychology"
+  description="A practitioner first, a psychologist second — Cara founded Virtuoso Psychology to do performance psychology the way it should be done: grounded, evidence-based, and built to leave you stronger."
+  jsonLd={jsonLd}
+>
+  <Header theme="light" />
+  <main id="main-content">
+    <section class="bg-paper text-ink">
+      <div class="px-6 md:px-12 py-16 md:py-24 grid md:grid-cols-12 gap-10">
+        <aside class="md:col-span-4">
+          <img
+            src="/images/cara-portrait.jpg"
+            alt="Cara Lea Moseley, founder of Virtuoso Psychology, standing pitchside at an indoor training facility, smiling to camera."
+            width="760"
+            height="950"
+            fetchpriority="high"
+            decoding="async"
+            class="w-full aspect-[4/5] object-cover object-top bg-cream-warm border border-ink/10"
+          />
+          <div class="mt-6" style="font-family: var(--font-display-sans);">
+            <p class="text-base font-bold text-ink">{about.identity.name}</p>
+            <p class="text-sm mt-1 text-ink-muted">{about.identity.role}</p>
+            <p class="text-sm mt-1 text-ink-muted">{about.identity.location}</p>
+          </div>
+        </aside>
+
+        <div class="md:col-span-8">
+          <p class="uppercase tracking-[0.25em] text-xs mb-4 text-gold-deep" style="font-family: var(--font-display-sans);">
+            About Cara
+          </p>
+          <h1 class="text-3xl md:text-5xl leading-[1.05] tracking-[-0.01em] mb-8" style="font-family: var(--font-display-serif); font-weight: 600;">
+            {about.heading}
+          </h1>
+
+          <div class="space-y-5 max-w-2xl text-base md:text-[17px] leading-[1.7] text-ink" style="font-family: var(--font-display-sans);">
+            {about.paragraphs.map((p) => (
+              <p>{p}</p>
+            ))}
+          </div>
+
+          {/* Credentials */}
+          <div class="mt-10 pt-8 border-t border-ink/10">
+            <p class="uppercase tracking-[0.2em] text-[11px] mb-5 text-ink-muted" style="font-family: var(--font-display-sans);">
+              Qualifications &amp; honours
+            </p>
+            <dl class="flex flex-wrap gap-x-10 gap-y-4">
+              {credentials.map((c) => (
+                <div>
+                  <dt
+                    class="uppercase tracking-[0.15em] text-[11px] text-gold-deep font-bold"
+                    style="font-family: var(--font-display-sans);"
+                  >
+                    {c.title}
+                  </dt>
+                  <dd class="text-sm mt-1 text-ink-muted" style="font-family: var(--font-display-sans);">
+                    {c.sub}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* Humanising section: EMPOWER motif + a candid, off-duty photo. */}
+    <section class="bg-cream-warm text-navy-deep border-t border-navy-deep/10 overflow-hidden">
+      <div class="px-6 md:px-12 py-16 md:py-20">
+        <p
+          class="leading-none text-navy-deep/10 select-none"
+          style="font-family: var(--font-display-serif); font-weight: 800; font-size: clamp(64px, 18vw, 280px); letter-spacing: -0.03em;"
+          aria-hidden="true"
+        >
+          EMPOWER
+        </p>
+        <div class="-mt-4 md:-mt-8 grid md:grid-cols-12 gap-10 items-center">
+          <p class="md:col-span-7 max-w-2xl text-lg md:text-2xl leading-relaxed" style="font-family: var(--font-display-serif); font-weight: 500;">
+            {about.humanisingFact}
+          </p>
+          <div class="md:col-span-5">
+            <img
+              src="/images/cara-running.jpg"
+              alt="Cara running a forest trail race in running kit, mid-stride and focused."
+              width="720"
+              height="900"
+              loading="lazy"
+              decoding="async"
+              class="w-full aspect-[4/5] object-cover object-top border border-navy-deep/10"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <CTABand
+      heading="Want to work together?"
+      body="The first step is always a conversation — about your team, your moment, and whether I'm the right person to help."
+      ctaLabel="Get in touch"
+    />
+  </main>
+  <Footer />
+</BaseLayout>

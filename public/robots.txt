@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /palettes
+Disallow: /palettes/
+
+Sitemap: https://www.virtuosopsychology.com/sitemap-index.xml

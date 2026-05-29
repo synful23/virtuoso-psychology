@@ -2,55 +2,62 @@
 
 /*
   Brand tokens — Virtuoso Psychology
-  Three palette options exposed simultaneously so the /palettes preview page
-  can render all three side-by-side. Once Cara picks one, the unused tokens
-  collapse and the chosen palette becomes the global default.
+  Production palette: Option A — Refined Navy & Gold (expanded system).
+  These are exposed as semantic Tailwind v4 theme tokens, so utilities like
+  `bg-navy-deep`, `text-gold`, `border-ink/10` are generated automatically.
+  Components should use these utilities + CSS :hover/group-hover — NOT inline
+  style strings or onmouseover handlers (that was a throwaway-preview pattern).
 */
 @theme {
-  /* Option A — Refined Navy & Gold */
-  --color-a-primary: #0b1b33;
-  --color-a-primary-mid: #152a4d;
-  --color-a-accent: #d4a24c;
-  --color-a-accent-deep: #a07628;
-  --color-a-surface: #faf7f0;
-  --color-a-ink: #1a1a1a;
+  /* Primary · navy — brand anchor */
+  --color-navy-deep: #0b1b33; /* hero surfaces, headers */
+  --color-navy-mid: #152a4d; /* cards, panels */
+  --color-navy-soft: #23365e; /* hover / secondary tier */
 
-  /* Option B — Stadium Bold */
-  --color-b-primary: #0a0a0a;
-  --color-b-surface: #ffffff;
-  --color-b-accent: #c6f432;
-  --color-b-accent-alt: #ff5a1f;
-  --color-b-neutral-1: #f4f4f4;
-  --color-b-neutral-4: #5a5a5a;
+  /* Surface · cream & paper — reading surfaces */
+  --color-cream: #faf7f0; /* warm default for long-form */
+  --color-cream-warm: #f1e9d6; /* quote panels, section breaks */
+  --color-paper: #ffffff; /* cool navy-on-white surface */
 
-  /* Option C — Editorial Calm */
-  --color-c-primary: #1a1a2e;
-  --color-c-accent: #c2522d;
-  --color-c-surface-warm: #f4ecd8;
-  --color-c-surface-cool: #ffffff;
-  --color-c-neutral-mid: #6b6b73;
+  /* Accent · gold — emphasis only, never furniture */
+  --color-gold: #d4a24c; /* CTAs, headline words, eyebrows */
+  --color-gold-deep: #a07628; /* hover / pressed state */
+  --color-gold-soft: #e8c988; /* tints / tags only */
 
-  /* Type — Google-hosted shortlist for the preview page only.
-     Final fonts will be self-hosted via @fontsource once palette is locked. */
-  --font-display-serif: "Fraunces", "Iowan Old Style", Georgia, serif;
+  /* Ink · text */
+  --color-ink: #1a1a1a; /* headlines + body on light */
+  --color-ink-muted: #5b5b60; /* supporting copy on light */
+  --color-ink-on-dark: #c8c2b0; /* body copy over navy */
+
+  /* Type — self-hosted via @fontsource (imported in BaseLayout). */
+  --font-display-serif: "Fraunces Variable", "Iowan Old Style", Georgia, serif;
   --font-display-sans: "Archivo", "Helvetica Neue", Arial, sans-serif;
   --font-body: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
 }
 
-/* Display fonts loaded only on the palette preview page so production stays light. */
 @layer base {
   html {
     font-family: var(--font-body);
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
   }
 
   body {
     margin: 0;
   }
 
-  /* Respect reduced-motion globally */
+  /* Visible keyboard focus (WCAG 2.2 §2.4.7 / §2.4.11). */
+  :focus-visible {
+    outline: 2px solid var(--color-gold-deep);
+    outline-offset: 2px;
+  }
+
+  /* Respect reduced-motion globally. */
   @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
     *,
     *::before,
     *::after {

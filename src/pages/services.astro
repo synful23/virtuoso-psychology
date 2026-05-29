@@ -1,0 +1,124 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import Button from "../components/Button.astro";
+import CTABand from "../components/CTABand.astro";
+import { services } from "../data/site";
+---
+
+<BaseLayout
+  title="Services · Virtuoso Psychology"
+  description="How we work with teams, individual athletes, and the people who lead them — workshops, 1:1 support, and speaking. Built around your moment."
+>
+  <Header theme="light" />
+  <main id="main-content">
+    {/* Intro */}
+    <section class="bg-paper text-ink">
+      <div class="px-6 md:px-12 py-16 md:py-24">
+        <p class="uppercase tracking-[0.25em] text-xs mb-4 text-gold-deep" style="font-family: var(--font-display-sans);">
+          Services
+        </p>
+        <h1 class="text-4xl md:text-6xl max-w-3xl leading-[1.05] tracking-[-0.01em]" style="font-family: var(--font-display-serif); font-weight: 600;">
+          The work, in three shapes.
+        </h1>
+        <p class="mt-8 max-w-2xl text-base md:text-lg leading-relaxed text-ink-muted">
+          Whatever the shape, the principle is the same — we build the skills with
+          you and hand them over. You leave more capable, not more reliant.
+        </p>
+        <nav class="mt-10 flex flex-wrap gap-x-6 gap-y-2" aria-label="Services">
+          {services.map((s) => (
+            <a
+              href={`#${s.id}`}
+              class="uppercase tracking-[0.18em] text-xs pb-1 border-b border-transparent text-ink-muted hover:text-ink hover:border-ink transition-colors duration-200"
+              style="font-family: var(--font-display-sans);"
+            >
+              {s.number} · {s.title}
+            </a>
+          ))}
+        </nav>
+      </div>
+    </section>
+
+    {services.map((s, i) => {
+      const dark = i % 2 === 0;
+      return (
+        <section
+          id={s.id}
+          class:list={[dark ? "bg-navy-deep text-cream" : "bg-cream text-ink", "scroll-mt-24 border-t", dark ? "border-cream/10" : "border-ink/10"]}
+        >
+          <div class="px-6 md:px-12 py-16 md:py-24 grid md:grid-cols-12 gap-10">
+            <div class="md:col-span-4">
+              <p
+                class:list={["uppercase tracking-[0.2em] text-xs mb-4 font-bold", dark ? "text-gold" : "text-gold-deep"]}
+                style="font-family: var(--font-display-sans);"
+              >
+                {s.number}
+              </p>
+              <h2 class="text-4xl md:text-5xl leading-[1.0]" style="font-family: var(--font-display-serif); font-weight: 600;">
+                {s.title}
+              </h2>
+              {s.tag && (
+                <p
+                  class="inline-block mt-5 uppercase tracking-[0.18em] text-[10px] px-2 py-1 bg-gold text-navy-deep font-bold"
+                  style="font-family: var(--font-display-sans);"
+                >
+                  {s.tag}
+                </p>
+              )}
+            </div>
+
+            <div class="md:col-span-8">
+              <p class:list={["text-lg md:text-xl leading-relaxed mb-10", dark ? "text-ink-on-dark" : "text-ink"]}>
+                {s.who}
+              </p>
+
+              <div class="grid sm:grid-cols-2 gap-10">
+                <div>
+                  <h3
+                    class:list={["uppercase tracking-[0.18em] text-[11px] mb-4 font-bold", dark ? "text-gold" : "text-gold-deep"]}
+                    style="font-family: var(--font-display-sans);"
+                  >
+                    What's included
+                  </h3>
+                  <ul class="space-y-2 text-sm" style="font-family: var(--font-display-sans);">
+                    {s.includes.map((item) => (
+                      <li class:list={["flex gap-3", dark ? "text-ink-on-dark" : "text-ink-muted"]}>
+                        <span class:list={[dark ? "text-gold" : "text-gold-deep"]} aria-hidden="true">—</span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <h3
+                    class:list={["uppercase tracking-[0.18em] text-[11px] mb-4 font-bold", dark ? "text-gold" : "text-gold-deep"]}
+                    style="font-family: var(--font-display-sans);"
+                  >
+                    The outcome
+                  </h3>
+                  <p class:list={["text-sm leading-relaxed", dark ? "text-ink-on-dark" : "text-ink-muted"]}>
+                    {s.outcome}
+                  </p>
+                </div>
+              </div>
+
+              <div class="mt-10">
+                <Button href="/contact" variant={dark ? "primary" : "secondary-light"}>
+                  Enquire about {s.title.toLowerCase()} →
+                </Button>
+              </div>
+            </div>
+          </div>
+        </section>
+      );
+    })}
+
+    <CTABand
+      heading="Not sure which fits?"
+      body="That's the most common place to start. Tell us about your moment and we'll point you the right way — even if that's somewhere other than us."
+      ctaLabel="Start the conversation"
+    />
+  </main>
+  <Footer />
+</BaseLayout>

@@ -1,0 +1,67 @@
+---
+import { credentials } from "../data/site";
+/*
+  Editorial credibility band on navy: Cara embedded in an elite staff (group
+  photo) + her credential chips. The "stat band" competitors use, rendered
+  editorially with a real "team behind the team" image.
+*/
+---
+
+<section class="bg-navy-deep text-cream border-t border-cream/10">
+  <div class="px-6 md:px-12 py-16 md:py-20 grid md:grid-cols-12 gap-10 items-center">
+    {/* The team-behind-the-team photo */}
+    <figure class="md:col-span-6">
+      <img
+        src="/images/cara-team.jpg"
+        alt="Cara Lea Moseley with the Brighton & Hove Albion first-team coaching staff in the training-ground tunnel."
+        width="1280"
+        height="840"
+        loading="lazy"
+        decoding="async"
+        class="w-full aspect-[3/2] object-cover border border-cream/10"
+      />
+      <figcaption class="mt-3 text-xs text-ink-on-dark/70" style="font-family: var(--font-display-sans);">
+        Part of the staff — the team behind the team.
+      </figcaption>
+    </figure>
+
+    <div class="md:col-span-6">
+      <p class="uppercase tracking-[0.25em] text-xs mb-4 text-gold" style="font-family: var(--font-display-sans);">
+        Credibility
+      </p>
+      <h2 class="text-3xl md:text-4xl leading-[1.1] mb-6" style="font-family: var(--font-display-serif); font-weight: 600;">
+        Embedded at the highest level of the game.
+      </h2>
+      <p class="text-base leading-relaxed text-ink-on-dark max-w-md mb-10">
+        Cara has competed for Wales on the world stage and works inside elite
+        football to this day — not as a visitor with a clipboard, but as part of
+        the staff. That lived experience travels with her into every team,
+        athlete, and room.
+      </p>
+
+      <dl class="grid sm:grid-cols-3 gap-x-8 gap-y-6 pt-8 border-t border-cream/10">
+        {credentials.map((c) => (
+          <div>
+            <dt
+              class="uppercase tracking-[0.15em] text-[11px] text-gold font-bold"
+              style="font-family: var(--font-display-sans);"
+            >
+              {c.title}
+            </dt>
+            <dd class="text-sm mt-1 text-ink-on-dark" style="font-family: var(--font-display-sans);">
+              {c.sub}
+            </dd>
+          </div>
+        ))}
+      </dl>
+
+      <a
+        href="/about"
+        class="inline-block mt-8 uppercase tracking-[0.2em] text-xs pb-1 font-bold text-gold border-b border-gold transition-colors duration-200 hover:text-cream hover:border-cream"
+        style="font-family: var(--font-display-sans);"
+      >
+        More about Cara →
+      </a>
+    </div>
+  </div>
+</section>

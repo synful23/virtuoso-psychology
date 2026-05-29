@@ -1,0 +1,159 @@
+---
+import Button from "./Button.astro";
+
+interface Props {
+  eyebrow: string;
+  ctaHref: string;
+  ctaLabel: string;
+  secondaryHref?: string;
+  secondaryLabel?: string;
+}
+const {
+  eyebrow,
+  ctaHref,
+  ctaLabel,
+  secondaryHref,
+  secondaryLabel,
+} = Astro.props;
+---
+
+<section class="hero-section relative bg-navy-deep text-cream overflow-hidden">
+  {/*
+    Faded background film. Autoplays muted on loop, no controls/audio.
+    A navy gradient fades it out on the left so the hero text stays readable.
+    Desktop-only + reduced-motion-safe (hidden when motion is reduced).
+  */}
+  <div class="hero-video hidden md:block" aria-hidden="true">
+    <video
+      class="hero-video__el"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="metadata"
+      tabindex="-1"
+    >
+      <source src="/video/herobg.mp4" type="video/mp4" />
+    </video>
+    <div class="hero-video__scrim"></div>
+  </div>
+
+  <div class="relative z-10 px-6 md:px-12 pt-14 md:pt-20 pb-16 md:pb-24 grid md:grid-cols-12 gap-8 items-end">
+    <div class="md:col-span-8">
+      <p
+        class="uppercase tracking-[0.25em] text-xs mb-5 text-gold"
+        style="font-family: var(--font-display-sans);"
+      >
+        {eyebrow}
+      </p>
+
+      {/*
+        Signature moment: the brand word EMPOWER is set oversized in gold as the
+        opening of the headline itself — the H1 continues at body-display scale,
+        so the giant word reads as the first word of the sentence, not a repeat.
+        A gold rule draws across beneath it on load.
+      */}
+      <h1 class="text-cream">
+        <span class="empower-stage relative block select-none">
+          <span class="empower-word">Empower</span>
+        </span>
+        <span
+          class="block leading-[1.05] tracking-[-0.02em] mt-6 md:mt-8"
+          style="font-family: var(--font-display-serif); font-weight: 600; font-size: clamp(30px, 4.6vw, 64px);"
+        >
+          the team. Elevate the game.
+        </span>
+      </h1>
+
+      <p class="mt-8 max-w-xl text-base md:text-lg leading-relaxed text-ink-on-dark">
+        We work with squads, individual athletes, and the coaches who lead them.
+        Plain-spoken, evidence-based, built around your moment — never about creating
+        a dependency.
+      </p>
+
+      <div class="mt-10 flex flex-wrap gap-4">
+        <Button href={ctaHref} variant="primary">{ctaLabel} →</Button>
+        {secondaryHref && secondaryLabel && (
+          <Button href={secondaryHref} variant="secondary-dark">{secondaryLabel}</Button>
+        )}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* ── Faded background film ── */
+  .hero-video {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .hero-video__el {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+  /* Fade the film into the navy on the left (behind the text) and soften the
+     edges so it never competes with the headline. */
+  .hero-video__scrim {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(
+        to right,
+        var(--color-navy-deep) 0%,
+        var(--color-navy-deep) 32%,
+        color-mix(in srgb, var(--color-navy-deep) 72%, transparent) 55%,
+        color-mix(in srgb, var(--color-navy-deep) 35%, transparent) 100%
+      ),
+      linear-gradient(
+        to bottom,
+        var(--color-navy-deep) 0%,
+        transparent 22%,
+        transparent 78%,
+        var(--color-navy-deep) 100%
+      );
+  }
+
+  /* Honour reduced-motion: no autoplaying film, fall back to the navy ground. */
+  @media (prefers-reduced-motion: reduce) {
+    .hero-video {
+      display: none;
+    }
+  }
+
+  .empower-stage {
+    /* Reserve the word's height so nothing shifts (no CLS). */
+    line-height: 0.82;
+  }
+
+  /* The oversized brand word — the headline's gold opening word. */
+  .empower-word {
+    display: block;
+    font-family: var(--font-display-serif);
+    font-weight: 800;
+    font-size: clamp(56px, 14vw, 180px);
+    line-height: 0.82;
+    letter-spacing: -0.03em;
+    color: var(--color-gold);
+  }
+
+  /* Subtle one-time rise-in for the brand word (motion users only). */
+  @media (prefers-reduced-motion: no-preference) {
+    .empower-word {
+      animation: empower-rise 800ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+    @keyframes empower-rise {
+      from {
+        opacity: 0;
+        transform: translateY(0.1em);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  }
+</style>
