@@ -9,7 +9,7 @@ import { services } from "../data/site";
 
 <BaseLayout
   title="Services · Virtuoso Psychology"
-  description="How we work with teams, individual athletes, and the people who lead them — workshops, 1:1 support, and speaking. Built around your moment."
+  description="Bespoke services for teams, organisations, leaders and individuals — recruitment, culture and strategic development, coaching, performance psychology, and speaking."
 >
   <Header theme="light" />
   <main id="main-content">
@@ -20,11 +20,12 @@ import { services } from "../data/site";
           Services
         </p>
         <h1 class="text-4xl md:text-6xl max-w-3xl leading-[1.05] tracking-[-0.01em]" style="font-family: var(--font-display-serif); font-weight: 600;">
-          The work, in three shapes.
+          Harness your individual and organisational strengths.
         </h1>
         <p class="mt-8 max-w-2xl text-base md:text-lg leading-relaxed text-ink-muted">
-          Whatever the shape, the principle is the same — we build the skills with
-          you and hand them over. You leave more capable, not more reliant.
+          Recruit the best, know your people, be the best. Bespoke services
+          tailored to you and your team — whatever the shape, we build the skills
+          with you and hand them over, so you leave more capable, not more reliant.
         </p>
         <nav class="mt-10 flex flex-wrap gap-x-6 gap-y-2" aria-label="Services">
           {services.map((s) => (
@@ -113,6 +114,60 @@ import { services } from "../data/site";
         </section>
       );
     })}
+
+    {/* Why it matters — the recruitment & culture rationale */}
+    <section class="bg-paper text-ink border-t border-ink/10">
+      <div class="px-6 md:px-12 py-16 md:py-24 grid md:grid-cols-12 gap-10">
+        <div class="md:col-span-4">
+          <p class="uppercase tracking-[0.2em] text-xs mb-4 text-gold-deep font-bold" style="font-family: var(--font-display-sans);">
+            Why it matters
+          </p>
+          <h2 class="text-3xl md:text-5xl leading-[1.05] tracking-[-0.01em]" style="font-family: var(--font-display-serif); font-weight: 600;">
+            High performance is built, not left to chance.
+          </h2>
+        </div>
+
+        <div class="md:col-span-8 max-w-2xl space-y-6 text-base md:text-[17px] leading-[1.7] text-ink" style="font-family: var(--font-display-sans);">
+          <p>
+            Performing well under pressure, consistently, asks a complex and
+            evolving set of variables to function well, work in harmony, and deeply
+            understand one another. Culture and environment are worth investing in:
+            the conditions you create around your people are fundamental to high
+            performance, supporting each individual to regulate, flourish, and cope
+            with the demands they meet in the moments that matter most. That isn't
+            created by chance — it takes deliberate design and attention. We help and
+            empower your organisation to take the lead and thrive.
+          </p>
+          <p>
+            When the environment is right, we focus on the people. Recruitment is
+            more than data metrics and generic personality profiling. A successful
+            recruit takes deep knowledge and understanding of the individual, their
+            world, and their relationship dynamics. That knowledge is a skill — we
+            offer expert insight into the recruitment and onboarding of talent,
+            making sure the conditions are conducive to consistent high performance.
+          </p>
+          <p>
+            And the cost of getting it wrong? Research suggests that somewhere
+            between 30–50% of these investments don't go to plan. As well as being
+            financially costly, that can carry reputational damage and real
+            difficulty for the individual involved. These failings aren't the
+            individual's responsibility, but a mismatch of all the variables that
+            sit around the process. Our service helps fill the gaps in knowledge that
+            data alone can't provide — sitting alongside your technical, tactical, and
+            financial evaluations.
+          </p>
+          <p>
+            We are completely impartial and independent, with one primary focus:
+            working with you to ensure the successful adaptation of your talent and
+            maximise their potential. Research suggests that even a 10% improvement in
+            the adaptation and onboarding of talent could equate to significant
+            retention value each year. So — do you want to jump the curve? We'll help
+            you build the processes, work with your staff, support recruitment and
+            onboarding, and empower your team to take it from there.
+          </p>
+        </div>
+      </div>
+    </section>
 
     <CTABand
       heading="Not sure which fits?"

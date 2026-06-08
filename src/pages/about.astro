@@ -3,7 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import CTABand from "../components/CTABand.astro";
-import { about, credentials, site } from "../data/site";
+import { about, site } from "../data/site";
 
 // Person-focused structured data for Cara on this page.
 const jsonLd = {
@@ -17,18 +17,22 @@ const jsonLd = {
   ],
   alumniOf: [
     { "@type": "SportsOrganization", name: "Brighton & Hove Albion FC" },
-    { "@type": "CollegeOrUniversity", name: "Cardiff Metropolitan University" },
   ],
   hasCredential: [
     {
       "@type": "EducationalOccupationalCredential",
-      credentialCategory: "degree",
-      name: "PhD, Psychology",
+      credentialCategory: "professional accreditation",
+      name: "HCPC Accredited Performance Psychologist",
     },
     {
       "@type": "EducationalOccupationalCredential",
       credentialCategory: "professional accreditation",
-      name: "HCPC Accredited Psychologist",
+      name: "BPS Chartered Psychologist",
+    },
+    {
+      "@type": "EducationalOccupationalCredential",
+      credentialCategory: "professional accreditation",
+      name: "BACP qualified Counselling Psychotherapist",
     },
   ],
   url: `${site.url}/about`,
@@ -77,26 +81,19 @@ const jsonLd = {
             ))}
           </div>
 
-          {/* Credentials */}
+          {/* Qualifications & honours */}
           <div class="mt-10 pt-8 border-t border-ink/10">
             <p class="uppercase tracking-[0.2em] text-[11px] mb-5 text-ink-muted" style="font-family: var(--font-display-sans);">
               Qualifications &amp; honours
             </p>
-            <dl class="flex flex-wrap gap-x-10 gap-y-4">
-              {credentials.map((c) => (
-                <div>
-                  <dt
-                    class="uppercase tracking-[0.15em] text-[11px] text-gold-deep font-bold"
-                    style="font-family: var(--font-display-sans);"
-                  >
-                    {c.title}
-                  </dt>
-                  <dd class="text-sm mt-1 text-ink-muted" style="font-family: var(--font-display-sans);">
-                    {c.sub}
-                  </dd>
-                </div>
+            <ul class="grid sm:grid-cols-2 gap-x-10 gap-y-3" style="font-family: var(--font-display-sans);">
+              {about.honours.map((h) => (
+                <li class="flex gap-3 text-sm text-ink">
+                  <span class="text-gold-deep" aria-hidden="true">—</span>
+                  <span>{h}</span>
+                </li>
               ))}
-            </dl>
+            </ul>
           </div>
         </div>
       </div>
