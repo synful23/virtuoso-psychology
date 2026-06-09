@@ -76,8 +76,38 @@ const jsonLd = {
           </h1>
 
           <div class="space-y-5 max-w-2xl text-base md:text-[17px] leading-[1.7] text-ink" style="font-family: var(--font-display-sans);">
-            {about.paragraphs.map((p) => (
-              <p>{p}</p>
+            {about.paragraphs.map((p, i) => (
+              <>
+                <p>{p}</p>
+                {i === 0 && (
+                  /* Working-philosophy audio: Cara's recording (placeholder path). */
+                  <div class="philosophy-audio not-prose pt-1" data-philosophy-audio>
+                    <button
+                      type="button"
+                      class="group inline-flex items-center gap-3 pl-2 pr-5 py-2 bg-navy-deep text-cream hover:bg-navy-mid transition-colors duration-200 cursor-pointer"
+                      data-audio-toggle
+                      aria-pressed="false"
+                    >
+                      <span
+                        class="grid place-items-center w-9 h-9 rounded-full bg-gold text-navy-deep"
+                        aria-hidden="true"
+                      >
+                        <svg data-icon="play" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M4 2.5v11l9-5.5-9-5.5Z"/></svg>
+                        <svg data-icon="pause" class="hidden" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M4 2.5h3v11H4v-11Zm5 0h3v11H9v-11Z"/></svg>
+                      </span>
+                      <span
+                        class="uppercase tracking-[0.15em] text-xs font-bold"
+                        style="font-family: var(--font-display-sans);"
+                        data-audio-label
+                      >
+                        Click to listen — my working philosophy
+                      </span>
+                    </button>
+                    {/* PLACEHOLDER — drop Cara's recording at /audio/philosophy.mp3 */}
+                    <audio data-audio-el preload="none" src="/audio/philosophy.mp3"></audio>
+                  </div>
+                )}
+              </>
             ))}
           </div>
 
@@ -115,7 +145,7 @@ const jsonLd = {
           </p>
           <div class="md:col-span-5">
             <img
-              src="/images/cara-running.jpg"
+              src="/images/cara-running3.png"
               alt="Cara running a forest trail race in running kit, mid-stride and focused."
               width="720"
               height="900"
@@ -136,3 +166,39 @@ const jsonLd = {
   </main>
   <Footer />
 </BaseLayout>
+
+<script>
+  // Working-philosophy audio: progressive enhancement. Without JS the button
+  // is inert (the <audio> has no controls), so it's hidden until wired up.
+  const root = document.querySelector<HTMLElement>("[data-philosophy-audio]");
+  const toggle = root?.querySelector<HTMLButtonElement>("[data-audio-toggle]");
+  const audio = root?.querySelector<HTMLAudioElement>("[data-audio-el]");
+  const label = root?.querySelector<HTMLElement>("[data-audio-label]");
+  const iconPlay = root?.querySelector<SVGElement>('[data-icon="play"]');
+  const iconPause = root?.querySelector<SVGElement>('[data-icon="pause"]');
+
+  if (root && toggle && audio && label && iconPlay && iconPause) {
+    const setPlaying = (playing: boolean) => {
+      toggle.setAttribute("aria-pressed", String(playing));
+      iconPlay.classList.toggle("hidden", playing);
+      iconPause.classList.toggle("hidden", !playing);
+      label.textContent = playing
+        ? "Pause — my working philosophy"
+        : "Click to listen — my working philosophy";
+    };
+
+    toggle.addEventListener("click", () => {
+      if (audio.paused) {
+        audio.play().catch(() => {
+          label.textContent = "Recording coming soon";
+        });
+      } else {
+        audio.pause();
+      }
+    });
+
+    audio.addEventListener("play", () => setPlaying(true));
+    audio.addEventListener("pause", () => setPlaying(false));
+    audio.addEventListener("ended", () => setPlaying(false));
+  }
+</script>

@@ -1,7 +1,6 @@
 ---
 import "../styles/global.css";
 import { site as siteData, logoExperiment } from "../data/site";
-import LogoSwitcher from "../components/LogoSwitcher.astro";
 
 const defaultLogoMark = logoExperiment.defaultMark;
 
@@ -72,15 +71,16 @@ const structuredData = jsonLd ?? defaultJsonLd;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     {/*
-      Logo experiment: set the active mark on <html> before paint (reads the
-      saved choice, else the default) so the correct lockup shows with no flash.
+      Logo locked to the chosen mark (set on <html> before paint, no flash).
+      The experiment is retired: any stale saved choice is cleared so the
+      default always wins.
     */}
     <script is:inline define:vars={{ defaultMark: defaultLogoMark }}>
+      document.documentElement.dataset.logo = defaultMark;
       try {
-        document.documentElement.dataset.logo =
-          localStorage.getItem("vp-logo") || defaultMark;
+        localStorage.removeItem("vp-logo");
       } catch (e) {
-        document.documentElement.dataset.logo = defaultMark;
+        /* ignore */
       }
     </script>
     <title>{title}</title>
@@ -123,7 +123,5 @@ const structuredData = jsonLd ?? defaultJsonLd;
       Skip to content
     </a>
     <slot />
-    {/* Logo experiment tool — remove this line to retire the experiment. */}
-    <LogoSwitcher />
   </body>
 </html>

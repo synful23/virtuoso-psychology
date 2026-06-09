@@ -48,20 +48,14 @@ const {
       </p>
 
       {/*
-        Signature moment: the brand word EMPOWER is set oversized in gold as the
-        opening of the headline itself — the H1 continues at body-display scale,
-        so the giant word reads as the first word of the sentence, not a repeat.
-        A gold rule draws across beneath it on load.
+        Headline leads with the brand promise itself — set oversized in cream as
+        the opening statement, with "Recruit the best" picked out in gold.
       */}
       <h1 class="text-cream">
-        <span class="empower-stage relative block select-none">
-          <span class="empower-word">Empower</span>
-        </span>
-        <span
-          class="block leading-[1.05] tracking-[-0.02em] mt-6 md:mt-8"
-          style="font-family: var(--font-display-serif); font-weight: 600; font-size: clamp(30px, 4.6vw, 64px);"
-        >
-          your people. Know your people. Recruit the best. Be the best.
+        <span class="headline-lead block select-none">
+          Know your people.<br />
+          Recruit the best.<br />
+          <span class="text-gold">Be the best.</span>
         </span>
       </h1>
 
@@ -125,28 +119,21 @@ const {
     }
   }
 
-  .empower-stage {
-    /* Reserve the word's height so nothing shifts (no CLS). */
-    line-height: 0.82;
-  }
-
-  /* The oversized brand word — the headline's gold opening word. */
-  .empower-word {
-    display: block;
+  /* The oversized brand promise — the headline's leading statement. */
+  .headline-lead {
     font-family: var(--font-display-serif);
-    font-weight: 800;
-    font-size: clamp(56px, 14vw, 180px);
-    line-height: 0.82;
-    letter-spacing: -0.03em;
-    color: var(--color-gold);
+    font-weight: 700;
+    font-size: clamp(40px, 8vw, 104px);
+    line-height: 1.02;
+    letter-spacing: -0.025em;
   }
 
-  /* Subtle one-time rise-in for the brand word (motion users only). */
+  /* Subtle one-time rise-in for the headline (motion users only). */
   @media (prefers-reduced-motion: no-preference) {
-    .empower-word {
-      animation: empower-rise 800ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    .headline-lead {
+      animation: headline-rise 800ms cubic-bezier(0.16, 1, 0.3, 1) both;
     }
-    @keyframes empower-rise {
+    @keyframes headline-rise {
       from {
         opacity: 0;
         transform: translateY(0.1em);

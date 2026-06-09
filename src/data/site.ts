@@ -43,7 +43,7 @@ export type LogoMark = { id: string; label: string; normal: string; white: strin
 export const logoExperiment = {
   // The wordmark — stays constant across all options.
   text: { normal: "/images/logos/text-logo.png", white: "/images/logos/text-logo-white.png" },
-  defaultMark: "logo3",
+  defaultMark: "logo4",
   marks: [
     { id: "logo3", label: "VP monogram", normal: "/images/logos/logo3.png", white: "/images/logos/logo3-white.png" },
     { id: "logo1", label: "Head + V", normal: "/images/logos/logo1.png", white: "/images/logos/logo1-white.png" },
@@ -83,7 +83,7 @@ export const services: Service[] = [
       "Developing psychologically informed systems",
     ],
     outcome:
-      "An environment built by deliberate design — one that lets your people regulate, flourish, and perform consistently in the moments that matter most, long after we hand it over.",
+      "An environment built by deliberate design — one that lets your people regulate, flourish, and perform consistently in the moments that matter most.",
   },
   {
     id: "individuals",
@@ -139,7 +139,7 @@ export const processSteps: ProcessStep[] = [
   {
     number: "03",
     title: "Hand over",
-    body: "We hand over — empowering you to take charge and lead, so you keep the tools long after the work ends.",
+    body: "We hand over — empowering you to take charge and lead.",
   },
 ];
 
@@ -168,9 +168,10 @@ export const credentials: Credential[] = [
 export const about = {
   heading: "Almost 20 years lived and breathed at the top of high performance.",
   paragraphs: [
-    "Cara has almost 20 years working in elite sport and business — and she didn't just study that world, she lived and breathed it. Representing Wales across a 16-year international career that took her to two World Championships and two Commonwealth Games, she knows the euphoria of competing at the highest level, and the challenges a career in high performance can bring, whether in sport or business.",
-    "As an athlete, Cara saw how differently the athlete was supported compared to the person behind them — an area too often neglected. The same is true of the people behind a team: the relationship dynamics, the way a group functions, the culture and environment around it. That is fundamental to high performance, and it's the area Cara will help you build. She has worked across professional football, rugby and GB sport — including four years as a psychology and wellbeing lead at Brighton & Hove Albion, and now as Women's Psychosocial Pathway Manager at The Football Association.",
-    "Value-driven and strengths-based, informed by the latest data and research, Cara works creatively, quickly and collaboratively to identify your strengths and build a clear, concise framework to work from. Grounded in evidence, she works alongside you to reach your goals and make sure you, your team, and your organisation harness your strengths and maximise your potential.",
+    "Cara not only has almost 20 years working in elite sports and business, she also lived and breathed the world of international sport. Representing Wales in a 16 year career that took her to compete at two World Championships and two Commonwealth Games, Cara truly understands the euphoria competing at the highest of levels, as well as the challenges a career in high performance, be that sport or business can bring. In addition to this, cara holds a deep insight into the environment required to enhance performance and ensure consistent execution of top level performance under the highest amounts of pressure.  what excellent looks like in high performance settings.",
+    "As an athlete, Cara was acutely aware how support for the athlete vs the person differed, an area often neglected. Similarly, the people behind the team are integral to the overall environment and culture of that organisation, the people within it, the relationship dynamics, the functioning of the team, and so, performance of the people within the system. This is area is fundamental to high performance. An area often overlooked. An area Cara will help you build!",
+    "Value driven and strengths-based approach, informed by the latest data insights and research, Cara will work alongside you to drive performance and ensure you maximise potential.",
+    "Cara’s ability to build relationships and understanding is rare, with a strong focus on empowerment, Cara is able to work creatively, quickly, collaboratively to identify your areas of strength and develop a clear, concise framework to work upon.",
   ],
   // A humanising note — kept about Cara herself.
   humanisingFact:
@@ -179,7 +180,7 @@ export const about = {
   // Distinct from `honours` (formal quals) so nothing repeats.
   identity: {
     name: "Cara Lea Moseley",
-    role: "Women's Psychosocial Pathway Manager, The FA",
+    role: "Company Director",
     location: "Based in Wales · working internationally",
   },
   // Full qualifications & honours list (About page). The home credibility band
