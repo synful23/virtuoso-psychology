@@ -115,7 +115,7 @@ export const services: Service[] = [
       "Mental health and wellbeing in sport",
     ],
     outcome:
-      "A room that leaves with something usable on Monday morning — not a highlight reel, but practical ideas they can apply themselves.",
+      "A room that leaves with something usable on Monday morning — not a highlight reel, but practical ideas to take away.",
   },
 ];
 
@@ -168,10 +168,9 @@ export const credentials: Credential[] = [
 export const about = {
   heading: "Almost 20 years lived and breathed at the top of high performance.",
   paragraphs: [
-    "Cara not only has almost 20 years working in elite sports and business, she also lived and breathed the world of international sport. Representing Wales in a 16 year career that took her to compete at two World Championships and two Commonwealth Games, Cara truly understands the euphoria competing at the highest of levels, as well as the challenges a career in high performance, be that sport or business can bring. In addition to this, cara holds a deep insight into the environment required to enhance performance and ensure consistent execution of top level performance under the highest amounts of pressure.  what excellent looks like in high performance settings.",
-    "As an athlete, Cara was acutely aware how support for the athlete vs the person differed, an area often neglected. Similarly, the people behind the team are integral to the overall environment and culture of that organisation, the people within it, the relationship dynamics, the functioning of the team, and so, performance of the people within the system. This is area is fundamental to high performance. An area often overlooked. An area Cara will help you build!",
-    "Value driven and strengths-based approach, informed by the latest data insights and research, Cara will work alongside you to drive performance and ensure you maximise potential.",
-    "Cara’s ability to build relationships and understanding is rare, with a strong focus on empowerment, Cara is able to work creatively, quickly, collaboratively to identify your areas of strength and develop a clear, concise framework to work upon.",
+    "Cara not only has almost 20 years working in elite sports and business, she also lived and breathed the world of international sport. Representing Wales in a 16 year career that took her to compete at two World Championships and two Commonwealth Games, Cara truly understands the euphoria competing at the highest of levels, as well as some of the challenges it presents. In addition to this, Cara holds a deep insight into the environment required to enhance performance and ensure consistent execution of top level performance under the highest amounts of pressure. Successful teams don't happen by chance, they are developed through a consistent and systematic approach, anchored by their values and performance objectives, underpinned by a high performance culture.",
+    "Cara’s ability to build relationships and understanding is rare, with a strong focus on empowerment, she works creatively, quickly, and collaboratively to identify your areas of strength and develop a clear, concise framework to work upon.",
+    "Applying a value drive and strengths based approach, informed by the latest data insights and research, Cara will work alongside you to drive performance and ensure you maximise potential.",
   ],
   // A humanising note — kept about Cara herself.
   humanisingFact:
@@ -181,7 +180,7 @@ export const about = {
   identity: {
     name: "Cara Lea Moseley",
     role: "Company Director",
-    location: "Based in Wales · working internationally",
+    location: "Working internationally",
   },
   // Full qualifications & honours list (About page). The home credibility band
   // shows a tighter 3-up subset via `credentials`.
