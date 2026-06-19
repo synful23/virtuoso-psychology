@@ -82,6 +82,20 @@ export const seo: Record<string, SeoMeta> = {
   },
 };
 
+/*
+  Cookie consent (UK GDPR / PECR). The site sets no cookies by default; analytics
+  is gated behind explicit opt-in via the ConsentBanner. The consent record itself
+  is stored in localStorage (a "strictly necessary" function that needs no consent),
+  not a cookie. `version` lets us re-prompt everyone if the cookie policy changes.
+*/
+export const consent = {
+  version: 1,
+  storageKey: "vp-consent",
+  policyHref: "/privacy",
+  message:
+    "We'd like to use privacy-friendly analytics to understand how the site is used. No tracking happens until you choose. You can change your mind anytime.",
+} as const;
+
 export type NavItem = { label: string; href: string };
 
 export const nav: NavItem[] = [

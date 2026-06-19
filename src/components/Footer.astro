@@ -69,10 +69,31 @@ const year = new Date().getFullYear();
   </div>
 
   <div
-    class="px-6 md:px-12 py-6 border-t border-cream/10 flex flex-col sm:flex-row gap-2 items-start sm:items-center justify-between text-[11px] uppercase tracking-[0.2em]"
+    class="px-6 md:px-12 py-6 border-t border-cream/10 flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between text-[11px] uppercase tracking-[0.2em]"
     style="font-family: var(--font-display-sans);"
   >
-    <p>© {site.name} {year}</p>
-    <p class="text-ink-on-dark">BPS · HCPC registered · No cookies, no tracking</p>
+    <p>© {site.name} {year} · BPS · HCPC registered</p>
+    <nav class="flex flex-wrap gap-x-5 gap-y-2" aria-label="Legal">
+      <a href="/privacy" class="text-ink-on-dark hover:text-cream transition-colors duration-200">
+        Privacy &amp; cookies
+      </a>
+      <button
+        type="button"
+        data-manage-consent
+        class="uppercase tracking-[0.2em] text-ink-on-dark hover:text-cream transition-colors duration-200 cursor-pointer"
+      >
+        Manage cookies
+      </button>
+    </nav>
   </div>
 </footer>
+
+<script>
+  // Re-open the consent banner so visitors can withdraw consent as easily as
+  // they gave it (PECR). `vpManageConsent` is defined by ConsentBanner.
+  document
+    .querySelector("[data-manage-consent]")
+    ?.addEventListener("click", () => {
+      (window as unknown as { vpManageConsent?: () => void }).vpManageConsent?.();
+    });
+</script>

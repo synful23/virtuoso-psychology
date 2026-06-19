@@ -1,0 +1,151 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { site } from "../data/site";
+
+/*
+  Privacy & cookie policy. PLACEHOLDER legal copy — Cara should review and confirm
+  the data-controller details, retention periods, and the analytics provider named
+  below before launch (ideally with a UK data-protection adviser). The cookie facts
+  here must stay in sync with what the site actually loads (see ConsentBanner +
+  the consent-gated analytics loader in BaseLayout).
+*/
+const updated = new Date().toLocaleDateString("en-GB", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+
+const sectionHeading =
+  "text-2xl md:text-3xl mt-12 mb-4 leading-tight";
+const sectionStyle = "font-family: var(--font-display-serif); font-weight: 600;";
+---
+
+<BaseLayout
+  title="Privacy & Cookies · Virtuoso Psychology"
+  description="How Virtuoso Psychology handles your data, and how we use cookies and privacy-friendly analytics — with consent, under UK GDPR and PECR."
+  noindex={true}
+>
+  <Header theme="light" />
+  <main id="main-content">
+    <section class="bg-paper text-ink">
+      <div class="px-6 md:px-12 py-16 md:py-24 max-w-3xl">
+        <p
+          class="uppercase tracking-[0.25em] text-xs mb-4 text-gold-deep"
+          style="font-family: var(--font-display-sans);"
+        >
+          Privacy &amp; Cookies
+        </p>
+        <h1
+          class="text-4xl md:text-6xl leading-[1.05] tracking-[-0.01em]"
+          style="font-family: var(--font-display-serif); font-weight: 600;"
+        >
+          Your data, handled plainly.
+        </h1>
+        <p class="mt-6 text-sm text-ink-muted" style="font-family: var(--font-display-sans);">
+          Last updated {updated}
+        </p>
+
+        <div
+          class="mt-8 space-y-4 text-base md:text-[17px] leading-[1.7] text-ink"
+          style="font-family: var(--font-display-sans);"
+        >
+          <p>
+            This policy explains what personal data {site.name} collects, why, and
+            your rights over it. It is written to comply with the UK GDPR and the
+            Privacy and Electronic Communications Regulations (PECR).
+          </p>
+
+          <h2 class={sectionHeading} style={sectionStyle}>Who we are</h2>
+          <p>
+            {site.name} ({site.founderName}) is the data controller for this
+            website. You can reach us at{" "}
+            <a
+              href={`mailto:${site.email}`}
+              class="text-ink underline underline-offset-4 hover:text-gold-deep transition-colors"
+            >
+              {site.email}
+            </a>.
+          </p>
+
+          <h2 class={sectionHeading} style={sectionStyle}>Cookies &amp; analytics</h2>
+          <p>
+            We do not set any non-essential cookies or run any analytics or tracking
+            <strong> until you give consent</strong> via our cookie banner. Reject is
+            as easy as accept, and if you reject, nothing beyond what is strictly
+            necessary to run the site is loaded.
+          </p>
+          <p>
+            We store your cookie choice in your browser's local storage (not a
+            cookie) so we do not have to ask again on every visit. This is a
+            strictly-necessary function and needs no consent.
+          </p>
+          <p>
+            If you accept, we load privacy-friendly analytics to understand, in
+            aggregate, how the site is used (for example which pages are visited).
+            We do not use this to identify you or to build advertising profiles.
+            {/* PLACEHOLDER — name the actual provider once confirmed, e.g.
+                "We use Plausible Analytics, which does not use cookies and does not
+                collect personal data." Update this to match the loader in BaseLayout. */}
+          </p>
+          <p>
+            You can change or withdraw your choice at any time using the
+            <strong> Manage cookies</strong> link in the footer.
+          </p>
+
+          <h2 class={sectionHeading} style={sectionStyle}>If you contact us</h2>
+          <p>
+            When you use the contact form or email us, we process the details you
+            provide (such as your name, email, and message) solely to respond to
+            your enquiry. We do not use them for marketing, and we do not share them
+            with third parties except the form-delivery service that routes your
+            message to us. {/* PLACEHOLDER — name the form provider, e.g. Web3Forms,
+            and link its privacy policy. */}
+          </p>
+
+          <h2 class={sectionHeading} style={sectionStyle}>Your rights</h2>
+          <p>
+            Under UK GDPR you have the right to access, correct, or erase your
+            personal data, to object to or restrict its processing, and to data
+            portability. To exercise any of these, email us at{" "}
+            <a
+              href={`mailto:${site.email}`}
+              class="text-ink underline underline-offset-4 hover:text-gold-deep transition-colors"
+            >
+              {site.email}
+            </a>. You also have the right to complain to the Information
+            Commissioner's Office (ICO) at ico.org.uk.
+          </p>
+
+          <h2 class={sectionHeading} style={sectionStyle}>Changes to this policy</h2>
+          <p>
+            If we change how we use cookies or your data, we will update this page
+            and, where required, ask for your consent again.
+          </p>
+        </div>
+
+        <div class="mt-12 pt-8 border-t border-ink/10">
+          <button
+            type="button"
+            data-manage-consent
+            class="inline-block px-7 py-4 uppercase tracking-[0.15em] text-sm font-bold border border-navy-deep text-navy-deep hover:bg-navy-deep hover:text-cream transition-colors duration-200 cursor-pointer"
+            style="font-family: var(--font-display-sans);"
+          >
+            Manage cookie preferences
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<script>
+  // Re-open the consent banner from this page (mirrors the footer link).
+  document
+    .querySelector("[data-manage-consent]")
+    ?.addEventListener("click", () => {
+      (window as unknown as { vpManageConsent?: () => void }).vpManageConsent?.();
+    });
+</script>

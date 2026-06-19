@@ -7,8 +7,9 @@ export default defineConfig({
   site: "https://www.virtuosopsychology.com",
   integrations: [
     sitemap({
-      // Keep the internal palette/design-reference pages out of the sitemap.
-      filter: (page) => !page.includes("/palettes"),
+      // Keep internal/noindex pages out of the sitemap (sitemaps should list
+      // only indexable URLs): palette design references and the privacy policy.
+      filter: (page) => !page.includes("/palettes") && !page.includes("/privacy"),
       // Freshness/priority signals. Homepage & services lead; about/contact follow.
       changefreq: "monthly",
       priority: 0.7,

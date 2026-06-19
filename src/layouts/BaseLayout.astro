@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import { site as siteData, sameAs, logoExperiment } from "../data/site";
+import ConsentBanner from "../components/ConsentBanner.astro";
 
 const defaultLogoMark = logoExperiment.defaultMark;
 
@@ -154,11 +155,30 @@ const robotsContent = noindex
     {/* Structured data */}
     <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
 
-    {/*
-      Cookieless analytics slot (no cookie banner needed). Uncomment and set
-      the domain once Cara confirms a Plausible / Cloudflare Web Analytics account.
-      <script defer data-domain="virtuosopsychology.com" src="https://plausible.io/js/script.js"></script>
-    */}
+    <!--
+      Consent-gated analytics (UK GDPR / PECR). NOTHING loads until the visitor
+      clicks "Accept" in the ConsentBanner, which fires `vp-consent-granted`.
+      Returning visitors who previously accepted have it re-fired on load.
+
+      To activate: uncomment the injected script below and set the provider.
+      Leave the gating logic intact so analytics never runs without consent.
+    -->
+    <script is:inline>
+      (() => {
+        let loaded = false;
+        function loadAnalytics() {
+          if (loaded) return;
+          loaded = true;
+          // --- ENABLE ANALYTICS HERE (only runs after explicit consent) ---
+          // const s = document.createElement("script");
+          // s.defer = true;
+          // s.dataset.domain = "virtuosopsychology.com";
+          // s.src = "https://plausible.io/js/script.js"; // or your GA/Cloudflare snippet
+          // document.head.appendChild(s);
+        }
+        window.addEventListener("vp-consent-granted", loadAnalytics);
+      })();
+    </script>
   </head>
   <body>
     <a
@@ -169,5 +189,6 @@ const robotsContent = noindex
       Skip to content
     </a>
     <slot />
+    <ConsentBanner />
   </body>
 </html>
