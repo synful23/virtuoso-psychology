@@ -1,6 +1,6 @@
 ---
 import "../styles/global.css";
-import { site as siteData, logoExperiment } from "../data/site";
+import { site as siteData, sameAs, logoExperiment } from "../data/site";
 
 const defaultLogoMark = logoExperiment.defaultMark;
 
@@ -19,8 +19,14 @@ interface Props {
   title: string;
   description?: string;
   ogImage?: string;
+  ogImageAlt?: string;
   noindex?: boolean;
   canonicalPath?: string;
+  /**
+   * Page-specific schema (e.g. Person on /about, Service on /services). It is
+   * added to the @graph alongside the always-present Organization + WebSite, so
+   * entity relationships stay intact on every page.
+   */
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
@@ -28,6 +34,7 @@ const {
   title,
   description = "High performance specialists in sport and business — helping you know your people, recruit the best, and be the best.",
   ogImage = "/og-default.png",
+  ogImageAlt = "Virtuoso Psychology — performance psychology for sport and business.",
   noindex = false,
   canonicalPath,
   jsonLd,
@@ -37,32 +44,61 @@ const site = Astro.site ?? new URL("https://www.virtuosopsychology.com");
 const canonicalURL = new URL(canonicalPath ?? Astro.url.pathname, site);
 const ogImageURL = new URL(ogImage, site);
 
-// Default structured data: the practice (ProfessionalService) + Cara (Person).
-// Placeholder values are flagged; swap when Cara confirms credentials.
-const defaultJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  name: "Virtuoso Psychology",
-  description,
+// Stable @id anchors so nodes across the graph can reference one another.
+const orgId = `${site.href}#organisation`;
+const websiteId = `${site.href}#website`;
+
+// The practice as an entity (ProfessionalService is a subtype of Organization).
+// Acts as publisher of the WebSite and provider referenced by page Service nodes.
+const organisation = {
+  "@type": ["Organization", "ProfessionalService"],
+  "@id": orgId,
+  name: siteData.name,
+  description: siteData.description,
   url: site.href,
-  areaServed: "GB",
-  image: ogImageURL.href,
-  sameAs: [siteData.social.instagram],
+  image: new URL("/og-default.png", site).href,
+  areaServed: [...siteData.areaServed],
+  knowsAbout: [...siteData.knowsAbout],
+  slogan: "Know your people. Recruit the best. Be the best.",
+  sameAs,
+  email: siteData.email,
+  contactPoint: {
+    "@type": "ContactPoint",
+    contactType: "enquiries",
+    email: siteData.email,
+    areaServed: [...siteData.areaServed],
+    availableLanguage: ["English"],
+  },
   founder: {
     "@type": "Person",
     name: siteData.founderName,
     jobTitle: siteData.founderRole,
+    sameAs,
   },
-  knowsAbout: [
-    "Performance psychology",
-    "High performance culture",
-    "Recruitment and onboarding",
-    "Leadership coaching",
-    "Performance under pressure",
-  ],
 };
 
-const structuredData = jsonLd ?? defaultJsonLd;
+const website = {
+  "@type": "WebSite",
+  "@id": websiteId,
+  name: siteData.name,
+  url: site.href,
+  inLanguage: "en-GB",
+  publisher: { "@id": orgId },
+};
+
+// Always emit Organization + WebSite; append any page-specific node(s).
+const pageNodes = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+// Strip @context from page nodes — the graph carries one shared context.
+const cleanedPageNodes = pageNodes.map(({ ["@context"]: _ctx, ...rest }) => rest);
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [organisation, website, ...cleanedPageNodes],
+};
+
+const robotsContent = noindex
+  ? "noindex, nofollow"
+  : "index, follow, max-image-preview:large, max-snippet:-1";
 ---
 
 <!doctype html>
@@ -85,10 +121,16 @@ const structuredData = jsonLd ?? defaultJsonLd;
     </script>
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="author" content={siteData.founderName} />
+    <meta name="robots" content={robotsContent} />
     <meta name="generator" content={Astro.generator} />
     <link rel="canonical" href={canonicalURL.href} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
+    {/* Identity verification for E-E-A-T (rel=me to owned profiles). */}
+    {sameAs.map((href) => (
+      <link rel="me" href={href} />
+    ))}
 
     {/* Open Graph */}
     <meta property="og:type" content="website" />
@@ -96,6 +138,9 @@ const structuredData = jsonLd ?? defaultJsonLd;
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL.href} />
     <meta property="og:image" content={ogImageURL.href} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={ogImageAlt} />
     <meta property="og:locale" content="en_GB" />
     <meta property="og:site_name" content="Virtuoso Psychology" />
 
@@ -104,6 +149,7 @@ const structuredData = jsonLd ?? defaultJsonLd;
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageURL.href} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
 
     {/* Structured data */}
     <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />

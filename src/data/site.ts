@@ -20,7 +20,67 @@ export const site = {
     instagram: "https://www.instagram.com/virtuoso.psychology",
     linkedin: "https://www.linkedin.com/in/cara-lea-moseley-267b744a/",
   },
+  // Entity / structured-data signals. Cara works internationally from a UK base,
+  // so we declare both. These feed the Organization & Person JSON-LD.
+  areaServed: ["United Kingdom", "Worldwide"],
+  addressCountry: "GB",
+  // Topical coverage — balanced across sport and business performance. Drives
+  // the `knowsAbout` field that helps search/answer engines place the entity.
+  knowsAbout: [
+    "Performance psychology",
+    "Sport psychology",
+    "High performance culture",
+    "Recruitment and onboarding",
+    "Leadership coaching",
+    "Organisational development",
+    "Performance under pressure",
+    "Athlete wellbeing",
+    "Mental health and wellbeing in sport",
+  ],
 } as const;
+
+/** Profiles to assert entity identity (schema `sameAs`, `rel="me"`). */
+export const sameAs: string[] = [site.social.instagram, site.social.linkedin];
+
+/*
+  Per-route SEO metadata — single source of truth for <title>, meta description
+  and the Open Graph image. Titles target a balanced sport + business audience
+  ("performance psychologist", "sport psychology", "high-performance culture")
+  while preserving the brand voice. Titles ≤ ~60 chars, descriptions ≤ ~155.
+  ogImage currently points at the shared default for every route (no per-page
+  art yet). When Cara supplies branded 1200×630 images, drop them at /og/<route>.png
+  and switch the paths here — no page edits needed.
+*/
+export type SeoMeta = { title: string; description: string; ogImage: string };
+
+const DEFAULT_OG = "/og-default.png";
+
+export const seo: Record<string, SeoMeta> = {
+  home: {
+    title: "Virtuoso Psychology · Performance Psychology for Sport & Business",
+    description:
+      "Performance psychology for sport and business. Know your people, recruit the best, be the best — plain-spoken, evidence-based, built to leave you stronger.",
+    ogImage: DEFAULT_OG,
+  },
+  about: {
+    title: "About Cara Lea Moseley · Performance Psychologist",
+    description:
+      "Cara Lea Moseley — HCPC & BPS chartered performance psychologist and ex-international athlete. Almost 20 years at the top of elite sport and business.",
+    ogImage: DEFAULT_OG,
+  },
+  services: {
+    title: "Services · Sport & Business Performance Psychology",
+    description:
+      "Recruitment, culture and strategic development, leadership coaching, performance psychology and speaking — bespoke for teams, organisations, leaders and individuals.",
+    ogImage: DEFAULT_OG,
+  },
+  contact: {
+    title: "Contact · Virtuoso Psychology",
+    description:
+      "Start a conversation about your organisation, team, or speaking enquiry. No pitch, no pressure — just a chance to see if we're the right fit.",
+    ogImage: DEFAULT_OG,
+  },
+};
 
 export type NavItem = { label: string; href: string };
 

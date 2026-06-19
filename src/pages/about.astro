@@ -3,16 +3,20 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import CTABand from "../components/CTABand.astro";
-import { about, site } from "../data/site";
+import { about, site, sameAs, seo } from "../data/site";
 
-// Person-focused structured data for Cara on this page.
+const meta = seo.about;
+
+// Person-focused structured data for Cara on this page. `worksFor` references
+// the site-wide Organization node (@id from BaseLayout) so the graph links up.
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: site.founderName,
   jobTitle: site.founderRole,
+  knowsAbout: [...site.knowsAbout],
   worksFor: [
-    { "@type": "Organization", name: site.name, url: site.url },
+    { "@id": `${site.url}/#organisation` },
     { "@type": "SportsOrganization", name: "The Football Association" },
   ],
   alumniOf: [
@@ -37,13 +41,15 @@ const jsonLd = {
   ],
   url: `${site.url}/about`,
   image: `${site.url}/images/cara-portrait.jpg`,
-  sameAs: [site.social.instagram, site.social.linkedin],
+  sameAs,
 };
 ---
 
 <BaseLayout
-  title="About Cara · Virtuoso Psychology"
-  description="A practitioner first, a psychologist second — Cara founded Virtuoso Psychology to do performance psychology the way it should be done: grounded, evidence-based, and built to leave you stronger."
+  title={meta.title}
+  description={meta.description}
+  ogImage={meta.ogImage}
+  ogImageAlt="Cara Lea Moseley, founder of Virtuoso Psychology."
   jsonLd={jsonLd}
 >
   <Header theme="light" />

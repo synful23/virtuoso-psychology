@@ -2,7 +2,18 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import { site } from "../data/site";
+import { site, seo } from "../data/site";
+
+const meta = seo.contact;
+
+// ContactPage linked to the site-wide Organization (@id from BaseLayout).
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  name: "Contact Virtuoso Psychology",
+  url: `${site.url}/contact`,
+  about: { "@id": `${site.url}/#organisation` },
+};
 
 // PLACEHOLDER — create a free key at https://web3forms.com and set
 // PUBLIC_WEB3FORMS_KEY in your .env. Until then the form will not deliver.
@@ -17,8 +28,10 @@ const labelClass = "block uppercase tracking-[0.15em] text-[11px] mb-2 text-ink 
 ---
 
 <BaseLayout
-  title="Contact · Virtuoso Psychology"
-  description="Start a conversation about your organisation, team, or speaking enquiry. No pitch, no pressure — just a chance to see if we're the right fit."
+  title={meta.title}
+  description={meta.description}
+  ogImage={meta.ogImage}
+  jsonLd={jsonLd}
 >
   <Header theme="light" />
   <main id="main-content">

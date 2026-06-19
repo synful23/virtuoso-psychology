@@ -9,12 +9,41 @@ import CredibilityBand from "../components/CredibilityBand.astro";
 import PullQuote from "../components/PullQuote.astro";
 import CTABand from "../components/CTABand.astro";
 import Footer from "../components/Footer.astro";
-import { services, processSteps } from "../data/site";
+import { services, processSteps, seo } from "../data/site";
+
+const meta = seo.home;
+
+// FAQPage built ONLY from copy already visible on this page (the Listen/Build/
+// Hand-over process and the three service summaries). Keeps schema truthful to
+// on-page content per Google's FAQ guidelines — no invented Q&A.
+const faqJsonLd = {
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Who does Virtuoso Psychology work with?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: services.map((s) => `${s.title}: ${s.summary}`).join(" "),
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How does Virtuoso Psychology work with you?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: processSteps.map((step) => `${step.title}. ${step.body}`).join(" "),
+      },
+    },
+  ],
+};
 ---
 
 <BaseLayout
-  title="Virtuoso Psychology · High Performance Specialists"
-  description="High performance specialists in sport and business. Know your people, recruit the best, be the best — plain-spoken, evidence-based, never about creating a dependency."
+  title={meta.title}
+  description={meta.description}
+  ogImage={meta.ogImage}
+  jsonLd={faqJsonLd}
 >
   <Header theme="dark" />
   <main id="main-content">

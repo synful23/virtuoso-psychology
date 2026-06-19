@@ -1,6 +1,46 @@
+# Virtuoso Psychology — https://www.virtuosopsychology.com
+
+# Default: allow all conventional search crawlers full access except the
+# internal design-reference pages.
 User-agent: *
 Allow: /
 Disallow: /palettes
 Disallow: /palettes/
+
+# AI answer-engine & assistant crawlers — explicitly welcomed so the site can
+# be cited and surfaced in AI tools (ChatGPT, Perplexity, Claude, Gemini, etc.).
+# Remove a stanza here if Cara later wishes to opt a given crawler out.
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
 
 Sitemap: https://www.virtuosopsychology.com/sitemap-index.xml

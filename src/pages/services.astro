@@ -4,12 +4,30 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import Button from "../components/Button.astro";
 import CTABand from "../components/CTABand.astro";
-import { services } from "../data/site";
+import { services, site, seo } from "../data/site";
+
+const meta = seo.services;
+
+// One Service node per offering, generated from the same `services[]` array the
+// page renders — so structured data never drifts from visible content. Each
+// references the site-wide Organization (@id from BaseLayout) as provider.
+const servicesJsonLd = services.map((s) => ({
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: s.title,
+  serviceType: s.title,
+  description: s.who,
+  provider: { "@id": `${site.url}/#organisation` },
+  areaServed: [...site.areaServed],
+  url: `${site.url}/services#${s.id}`,
+}));
 ---
 
 <BaseLayout
-  title="Services · Virtuoso Psychology"
-  description="Bespoke services for teams, organisations, leaders and individuals — recruitment, culture and strategic development, coaching, performance psychology, and speaking."
+  title={meta.title}
+  description={meta.description}
+  ogImage={meta.ogImage}
+  jsonLd={servicesJsonLd}
 >
   <Header theme="light" />
   <main id="main-content">
